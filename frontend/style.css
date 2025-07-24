@@ -3,3 +3,5 @@ body { margin: 0; font-family: sans-serif; }
 .question-box { padding: 1rem; background: #eee; }
 .strike-counter, .game-timer { padding: 0.5rem; }
 .result-overlay { position: absolute; top: 10px; right: 10px; padding: 0.5rem; color: #fff; }
+.timers { display: flex; gap: 1rem; padding: 0.5rem; }
+

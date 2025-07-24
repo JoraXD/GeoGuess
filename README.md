@@ -16,6 +16,13 @@ npm test
 
 ## Frontend
 
-The frontend React code is placed in the `frontend` folder. It uses Leaflet to display a world map and several components for the game flow.
+The frontend React code lives in `frontend`. Build the TypeScript with:
 
-Build scripts are placeholders and would normally require a bundler (like Vite) and dependencies which are not installed in this environment.
+```bash
+cd frontend
+npm run build
+```
+
+Open `frontend/index.html` in a browser to play the game. It fetches questions
+from the backend and renders the map using Leaflet.
+
