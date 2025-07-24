@@ -7,6 +7,7 @@ import ResultOverlay from '../components/ResultOverlay';
 
 import { Question, AnswerResponse } from '../types';
 
+
 interface Props {
   mode: 'sprint' | 'survival';
   onFinish: (score: number) => void;
@@ -64,6 +65,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
 
   const handleClick = (lat: number, lng: number) => {
     if (!question || result) return;
+
     setClicked([lat, lng]);
     fetch('/check-answer', {
       method: 'POST',
@@ -106,6 +108,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
         <GameTimer seconds={qTime} onExpire={() => {}} />
         {mode === 'sprint' && <GameTimer seconds={gameTime} onExpire={() => {}} />}
       </div>
+
       <div className="map-container">
         <GameMap
           onMapClick={handleClick}
@@ -114,6 +117,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
           lineColor={result ? (result.distanceKm <= 50 ? 'green' : result.distanceKm <= 200 ? 'yellow' : 'red') : 'blue'}
         />
         {result && <ResultOverlay correct={result.correct} distance={result.distanceKm} />}
+
       </div>
     </div>
   );

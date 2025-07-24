@@ -26,11 +26,13 @@ export default function GameMap({ onMapClick, correctPoint, clickedPoint, lineCo
     <MapContainer center={[20, 0]} zoom={2} style={{ height: '100%', width: '100%' }}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <ClickHandler onClick={onMapClick} />
+
       {correctPoint && clickedPoint && (
         <>
           <Marker position={correctPoint} />
           <Marker position={clickedPoint} />
           <Polyline pathOptions={{ color: lineColor }} positions={[clickedPoint, correctPoint]} />
+
         </>
       )}
     </MapContainer>

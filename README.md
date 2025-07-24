@@ -25,3 +25,4 @@ npm run build
 
 Open `frontend/index.html` in a browser to play the game. It fetches questions
 from the backend and renders the map using Leaflet.
+
