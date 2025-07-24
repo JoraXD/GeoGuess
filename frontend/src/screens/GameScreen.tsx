@@ -6,7 +6,6 @@ import GameTimer from '../components/GameTimer';
 import ResultOverlay from '../components/ResultOverlay';
 
 import { Question, AnswerResponse } from '../types';
-
 interface Props {
   mode: 'sprint' | 'survival';
   onFinish: (score: number) => void;
@@ -59,11 +58,13 @@ export default function GameScreen({ mode, onFinish }: Props) {
       return;
     }
     const id = setTimeout(() => setQTime((t: number) => t - 1), 1000);
+
     return () => clearTimeout(id);
   }, [qTime, mode, score, onFinish]);
 
   const handleClick = (lat: number, lng: number) => {
     if (!question || result) return;
+
     setClicked([lat, lng]);
     fetch('/check-answer', {
       method: 'POST',
@@ -80,6 +81,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
         setResult(data);
         setStrike(data.strike);
         if (data.correct) setScore((s: number) => s + 1);
+
         else if (mode === 'survival') onFinish(score);
       });
   };
@@ -88,6 +90,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
     if (result && mode === 'sprint') {
       const id = setTimeout(() => {
         setAsked((a: number) => a + 1);
+
         fetchQuestion();
       }, 1500);
       return () => clearTimeout(id);

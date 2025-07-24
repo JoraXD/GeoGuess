@@ -13,11 +13,13 @@ export default function GameTimer({ seconds, onExpire }: Props) {
   }, [seconds]);
 
   useEffect(() => {
+
     if (time <= 0) {
       onExpire();
       return;
     }
     const id = setTimeout(() => setTime((t: number) => t - 1), 1000);
+
     return () => clearTimeout(id);
   }, [time, onExpire]);
 
