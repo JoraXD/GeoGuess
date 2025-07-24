@@ -1,5 +1,6 @@
 import { MapContainer, TileLayer, Marker, Polyline, useMapEvents } from 'react-leaflet';
-import { LatLngTuple } from 'leaflet';
+import { LatLngTuple, LeafletMouseEvent } from 'leaflet';
+
 
 interface ClickHandlerProps {
   onClick: (lat: number, lng: number) => void;
@@ -7,7 +8,7 @@ interface ClickHandlerProps {
 
 function ClickHandler({ onClick }: ClickHandlerProps) {
   useMapEvents({
-    click(e) {
+    click(e: LeafletMouseEvent) {
       onClick(e.latlng.lat, e.latlng.lng);
     },
   });

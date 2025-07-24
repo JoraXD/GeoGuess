@@ -6,8 +6,6 @@ import GameTimer from '../components/GameTimer';
 import ResultOverlay from '../components/ResultOverlay';
 
 import { Question, AnswerResponse } from '../types';
-
-
 interface Props {
   mode: 'sprint' | 'survival';
   onFinish: (score: number) => void;
@@ -44,7 +42,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
         onFinish(score);
         return;
       }
-      const id = setTimeout(() => setGameTime(t => t - 1), 1000);
+      const id = setTimeout(() => setGameTime((t: number) => t - 1), 1000);
       return () => clearTimeout(id);
     }
   }, [gameTime, asked, mode, score, onFinish]);
@@ -54,12 +52,13 @@ export default function GameScreen({ mode, onFinish }: Props) {
       if (mode === 'survival') {
         onFinish(score);
       } else {
-        setAsked(a => a + 1);
+        setAsked((a: number) => a + 1);
         fetchQuestion();
       }
       return;
     }
-    const id = setTimeout(() => setQTime(t => t - 1), 1000);
+    const id = setTimeout(() => setQTime((t: number) => t - 1), 1000);
+
     return () => clearTimeout(id);
   }, [qTime, mode, score, onFinish]);
 
@@ -81,7 +80,8 @@ export default function GameScreen({ mode, onFinish }: Props) {
       .then((data: AnswerResponse) => {
         setResult(data);
         setStrike(data.strike);
-        if (data.correct) setScore(s => s + 1);
+        if (data.correct) setScore((s: number) => s + 1);
+
         else if (mode === 'survival') onFinish(score);
       });
   };
@@ -89,7 +89,8 @@ export default function GameScreen({ mode, onFinish }: Props) {
   useEffect(() => {
     if (result && mode === 'sprint') {
       const id = setTimeout(() => {
-        setAsked(a => a + 1);
+        setAsked((a: number) => a + 1);
+
         fetchQuestion();
       }, 1500);
       return () => clearTimeout(id);
@@ -108,7 +109,6 @@ export default function GameScreen({ mode, onFinish }: Props) {
         <GameTimer seconds={qTime} onExpire={() => {}} />
         {mode === 'sprint' && <GameTimer seconds={gameTime} onExpire={() => {}} />}
       </div>
-
       <div className="map-container">
         <GameMap
           onMapClick={handleClick}
@@ -117,7 +117,6 @@ export default function GameScreen({ mode, onFinish }: Props) {
           lineColor={result ? (result.distanceKm <= 50 ? 'green' : result.distanceKm <= 200 ? 'yellow' : 'red') : 'blue'}
         />
         {result && <ResultOverlay correct={result.correct} distance={result.distanceKm} />}
-
       </div>
     </div>
   );
