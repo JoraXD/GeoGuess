@@ -22,7 +22,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
   const [gameTime, setGameTime] = useState(mode === 'sprint' ? 120 : 0);
 
   const fetchQuestion = () => {
-    fetch('/questions?category=landmark')
+    fetch('http://localhost:3000/questions?category=landmark')
       .then(r => r.json())
       .then((q: Question) => {
         setQuestion(q);
@@ -66,7 +66,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
     if (!question || result) return;
 
     setClicked([lat, lng]);
-    fetch('/check-answer', {
+    fetch('http://localhost:3000/check-answer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

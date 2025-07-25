@@ -23,6 +23,8 @@ cd frontend
 npm run build
 ```
 
-Open `frontend/index.html` in a browser to play the game. It fetches questions
-from the backend and renders the map using Leaflet.
+Start the backend with `npm start` so it listens on `http://localhost:3000`.
+After building the frontend, open `frontend/index.html` directly in a browser.
+The app fetches questions from `http://localhost:3000` and renders the map
+using Leaflet.
 
