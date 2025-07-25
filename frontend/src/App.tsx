@@ -16,6 +16,10 @@ export default function App() {
     setMode('end');
   };
 
+  const handleHome = () => {
+    setMode('start');
+  };
+
   const handleRestart = () => {
     setScore(0);
     setMode('start');
@@ -23,6 +27,6 @@ export default function App() {
 
   if (mode === 'start') return <StartScreen onStart={handleStart} />;
   if (mode === 'sprint' || mode === 'survival')
-    return <GameScreen mode={mode} onFinish={handleFinish} />;
+    return <GameScreen mode={mode} onFinish={handleFinish} onHome={handleHome} />;
   return <EndScreen score={score} onRestart={handleRestart} />;
 }
