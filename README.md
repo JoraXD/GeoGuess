@@ -14,17 +14,36 @@ cd backend
 npm test
 ```
 
+Build and start the server with:
+
+```bash
+cd backend
+npm run build && npm start
+```
+
 ## Frontend
 
-The frontend React code lives in `frontend`. Build the TypeScript with:
+The frontend React code lives in `frontend` and uses Vite for bundling.
+For development run the dev server with:
+
+```bash
+cd frontend
+npm run dev
+```
+
+Create a production bundle with:
 
 ```bash
 cd frontend
 npm run build
 ```
 
-Start the backend with `npm start` so it listens on `http://localhost:3000`.
-After building the frontend, open `frontend/index.html` directly in a browser.
-The app fetches questions from `http://localhost:3000` and renders the map
+Preview the built files with:
+
+```bash
+npm run preview
+```
+Make sure the backend is running on `http://localhost:3000` before loading the
+frontend. The application fetches questions from the backend and renders the map
 using Leaflet.
 
