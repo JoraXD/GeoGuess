@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 
 interface Props {
   correct: boolean;
@@ -11,7 +13,9 @@ interface Props {
 
 export default function StatsModal({ correct, distance, score, question, onContinue, onHome }: Props) {
   const color = distance <= 50 ? 'green' : distance <= 200 ? 'yellow' : 'red';
-  return (
+
+  const modal = (
+
     <div className="stats-modal">
       <div className="stats-modal-content">
         <h2 style={{ color }}>{correct ? 'Correct!' : 'Wrong!'}</h2>
@@ -25,4 +29,7 @@ export default function StatsModal({ correct, distance, score, question, onConti
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modal, document.body);
+
 }
