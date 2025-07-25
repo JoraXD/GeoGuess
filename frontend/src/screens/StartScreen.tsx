@@ -5,9 +5,9 @@ interface Props {
 export default function StartScreen({ onStart }: Props) {
   return (
     <div className="start-screen">
-      <h1>GeoGuess Game</h1>
-      <button onClick={() => onStart('sprint')}>Sprint</button>
-      <button onClick={() => onStart('survival')}>Survival</button>
+      <h1>Игра GeoGuess</h1>
+      <button onClick={() => onStart('sprint')}>Спринт</button>
+      <button onClick={() => onStart('survival')}>Выживание</button>
     </div>
   );
 }
