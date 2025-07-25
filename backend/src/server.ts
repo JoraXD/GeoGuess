@@ -6,6 +6,12 @@ const { AnswerRequest, AnswerResponse, Question } = require('./types');
 
 const sessionStrikes: Record<string, number> = {};
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
 function getRandomQuestion(category: string): any {
   const filtered = questions.filter((q: any) => q.category === category);
   return filtered[Math.floor(Math.random() * filtered.length)];
@@ -16,6 +22,7 @@ function sendJson(res: any, data: unknown, status = 200) {
   res.writeHead(status, {
     'Content-Type': 'application/json',
     'Content-Length': Buffer.byteLength(body),
+    ...corsHeaders,
   });
   res.end(body);
 }
@@ -64,6 +71,11 @@ function handleCheckAnswer(req: any, res: any) {
 
 const server = http.createServer((req: any, res: any) => {
   const url = parse(req.url || '');
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204, corsHeaders);
+    res.end();
+    return;
+  }
   if (req.method === 'GET' && url.pathname === '/questions') {
     handleGetQuestions(req, res);
   } else if (req.method === 'POST' && url.pathname === '/check-answer') {
