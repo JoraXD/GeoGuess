@@ -3,15 +3,16 @@ import GameMap from '../components/Map';
 import QuestionBox from '../components/QuestionBox';
 import StrikeCounter from '../components/StrikeCounter';
 import GameTimer from '../components/GameTimer';
-import ResultOverlay from '../components/ResultOverlay';
+import StatsModal from '../components/StatsModal';
 
 import { Question, AnswerResponse } from '../types';
 interface Props {
   mode: 'sprint' | 'survival';
   onFinish: (score: number) => void;
+  onHome: () => void;
 }
 
-export default function GameScreen({ mode, onFinish }: Props) {
+export default function GameScreen({ mode, onFinish, onHome }: Props) {
   const [question, setQuestion] = useState<Question | null>(null);
   const [clicked, setClicked] = useState<[number, number] | null>(null);
   const [result, setResult] = useState<AnswerResponse | null>(null);
@@ -38,6 +39,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
 
   useEffect(() => {
     if (mode === 'sprint') {
+      if (result) return;
       if (gameTime <= 0 || asked >= 10) {
         onFinish(score);
         return;
@@ -48,6 +50,7 @@ export default function GameScreen({ mode, onFinish }: Props) {
   }, [gameTime, asked, mode, score, onFinish]);
 
   useEffect(() => {
+    if (result) return;
     if (qTime <= 0) {
       if (mode === 'survival') {
         onFinish(score);
@@ -81,25 +84,27 @@ export default function GameScreen({ mode, onFinish }: Props) {
         setResult(data);
         setStrike(data.strike);
         if (data.correct) setScore((s: number) => s + 1);
-
-        else if (mode === 'survival') onFinish(score);
       });
   };
 
-  useEffect(() => {
-    if (result && mode === 'sprint') {
-      const id = setTimeout(() => {
-        setAsked((a: number) => a + 1);
-
-        fetchQuestion();
-      }, 1500);
-      return () => clearTimeout(id);
+  const handleContinue = () => {
+    if (!result) return;
+    const nextAsked = asked + 1;
+    if (mode === 'sprint') {
+      if (gameTime <= 0 || nextAsked > 10) {
+        onFinish(score);
+        return;
+      }
+      setAsked(nextAsked);
+    } else {
+      if (!result.correct) {
+        onFinish(score);
+        return;
+      }
+      setAsked(nextAsked);
     }
-    if (result && mode === 'survival' && result.correct) {
-      const id = setTimeout(() => fetchQuestion(), 1500);
-      return () => clearTimeout(id);
-    }
-  }, [result, mode]);
+    fetchQuestion();
+  };
 
   return (
     <div className="game-screen">
@@ -115,8 +120,18 @@ export default function GameScreen({ mode, onFinish }: Props) {
           correctPoint={result ? [result.correctLat, result.correctLng] : undefined}
           clickedPoint={clicked ? [clicked[0], clicked[1]] : undefined}
           lineColor={result ? (result.distanceKm <= 50 ? 'green' : result.distanceKm <= 200 ? 'yellow' : 'red') : 'blue'}
+          answerCorrect={result ? result.correct : undefined}
         />
-        {result && <ResultOverlay correct={result.correct} distance={result.distanceKm} />}
+        {result && (
+          <StatsModal
+            correct={result.correct}
+            distance={result.distanceKm}
+            score={score}
+            question={asked + 1}
+            onContinue={handleContinue}
+            onHome={onHome}
+          />
+        )}
       </div>
     </div>
   );
