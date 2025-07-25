@@ -1,5 +1,4 @@
 const http = require('http');
-const { parse } = require('url');
 const { questions } = require('./questions');
 const { haversineDistanceKm } = require('./haversine');
 const { AnswerRequest, AnswerResponse, Question } = require('./types');
@@ -28,8 +27,8 @@ function sendJson(res: any, data: unknown, status = 200) {
 }
 
 function handleGetQuestions(req: any, res: any) {
-  const url = parse(req.url || '', true);
-  const category = (url.query.category as string) || 'landmark';
+  const url = new URL(req.url || '', `http://${req.headers.host}`);
+  const category = url.searchParams.get('category') || 'landmark';
   const question = getRandomQuestion(category);
   sendJson(res, question);
 }
@@ -70,7 +69,7 @@ function handleCheckAnswer(req: any, res: any) {
 }
 
 const server = http.createServer((req: any, res: any) => {
-  const url = parse(req.url || '');
+  const url = new URL(req.url || '', `http://${req.headers.host}`);
   if (req.method === 'OPTIONS') {
     res.writeHead(204, corsHeaders);
     res.end();
