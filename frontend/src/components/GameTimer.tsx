@@ -23,5 +23,5 @@ export default function GameTimer({ seconds, onExpire }: Props) {
     return () => clearTimeout(id);
   }, [time, onExpire]);
 
-  return <div className="game-timer">Time: {time}</div>;
+  return <div className="game-timer">Время: {time}</div>;
 }

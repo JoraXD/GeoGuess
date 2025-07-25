@@ -18,13 +18,13 @@ export default function StatsModal({ correct, distance, score, question, onConti
 
     <div className="stats-modal">
       <div className="stats-modal-content">
-        <h2 style={{ color }}>{correct ? 'Correct!' : 'Wrong!'}</h2>
-        <p>Distance: {distance.toFixed(2)} km</p>
-        <p>Score: {score}</p>
-        <p>Question: {question}</p>
+        <h2 style={{ color }}>{correct ? 'Верно!' : 'Неверно!'}</h2>
+        <p>Расстояние: {distance.toFixed(2)} км</p>
+        <p>Счёт: {score}</p>
+        <p>Вопрос: {question}</p>
         <div className="stats-buttons">
-          <button onClick={onContinue}>Continue</button>
-          <button onClick={onHome}>Home</button>
+          <button onClick={onContinue}>Далее</button>
+          <button onClick={onHome}>На главную</button>
         </div>
       </div>
     </div>

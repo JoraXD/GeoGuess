@@ -6,8 +6,8 @@ interface Props {
 export default function EndScreen({ score, onRestart }: Props) {
   return (
     <div className="end-screen">
-      <h2>Your score: {score}</h2>
-      <button onClick={onRestart}>Play Again</button>
+      <h2>Ваш результат: {score}</h2>
+      <button onClick={onRestart}>Играть снова</button>
     </div>
   );
 }

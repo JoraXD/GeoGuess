@@ -3,5 +3,5 @@ interface Props {
 }
 
 export default function StrikeCounter({ strike }: Props) {
-  return <div className="strike-counter">Strike: {strike}</div>;
+  return <div className="strike-counter">Серия: {strike}</div>;
 }
