@@ -1,7 +1,73 @@
-body { margin: 0; font-family: sans-serif; }
-.map-container { height: 80vh; }
-.question-box { padding: 1rem; background: #eee; }
-.strike-counter, .game-timer { padding: 0.5rem; }
-.result-overlay { position: absolute; top: 10px; right: 10px; padding: 0.5rem; color: #fff; }
-.timers { display: flex; gap: 1rem; padding: 0.5rem; }
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: #f2f6ff;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #3498db;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+.start-screen,
+.end-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 1rem;
+}
+
+.game-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.map-container {
+  flex-grow: 1;
+  height: 80vh;
+  position: relative;
+}
+
+.question-box {
+  padding: 1rem;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+.strike-counter,
+.game-timer {
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.result-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.timers {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem;
+}
 
