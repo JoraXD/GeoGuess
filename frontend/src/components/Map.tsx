@@ -46,7 +46,7 @@ export default function GameMap({
 
   return (
     <MapContainer center={[20, 0]} zoom={2} style={{ height: '100%', width: '100%' }}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    <TileLayer url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png?lang=ru" />
       <ClickHandler onClick={onMapClick} />
 
       {correctPoint && clickedPoint && (
