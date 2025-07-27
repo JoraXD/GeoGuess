@@ -47,7 +47,11 @@ export default function GameMap({
 
   return (
     <MapContainer center={[20, 0]} zoom={2} style={{ height: '100%', width: '100%' }}>
-    <TileLayer url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png?lang=ru" />
+    <TileLayer
+        url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
+        subdomains={['a', 'b', 'c', 'd']}
+        attribution="&copy; OpenStreetMap contributors &copy; CARTO"
+      />
       <ClickHandler onClick={onMapClick} />
 
       {correctPoint && clickedPoint && (
