@@ -8,8 +8,8 @@ import StatsModal from '../components/StatsModal';
 import { Question, AnswerResponse } from '../types';
 
 function calculatePoints(distanceKm: number): number {
-  if (distanceKm <= 5) return 1000;
-  if (distanceKm <= 200) return 600;
+  if (distanceKm <= 200) return 1000;
+  if (distanceKm <= 500) return 600;
   const maxDistance = 1000;
   if (distanceKm >= maxDistance) return 0;
   const ratio = (distanceKm - 200) / (maxDistance - 200);
