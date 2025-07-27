@@ -1,5 +1,7 @@
 export type Category = 'country' | 'capital' | 'landmark' | 'mixed';
 
+export type BBox = [number, number, number, number];
+
 export type Question = {
   id: number;
   text: string;
@@ -7,6 +9,8 @@ export type Question = {
   lng: number;
   hint: string;
   category: 'country' | 'capital' | 'landmark';
+  bbox?: BBox;
+  radiusKm?: number;
 };
 
 export type AnswerResponse = {
