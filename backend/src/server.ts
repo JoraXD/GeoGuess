@@ -1,6 +1,6 @@
 const http = require('http');
 const { questions } = require('./questions');
-const { haversineDistanceKm } = require('./haversine');
+const { checkAnswer } = require('./answer');
 const { AnswerRequest, AnswerResponse, Question } = require('./types');
 
 const sessionStrikes: Record<string, number> = {};
@@ -46,25 +46,11 @@ function handleCheckAnswer(req: any, res: any) {
       return;
     }
 
-    const distance = haversineDistanceKm(
+    const { correct, distance } = checkAnswer(
+      question,
       data.clickedLat,
-      data.clickedLng,
-      question.lat,
-      question.lng
+      data.clickedLng
     );
-
-    let correct = false;
-    if (question.bbox) {
-      const [minLat, minLng, maxLat, maxLng] = question.bbox;
-      correct =
-        data.clickedLat >= minLat &&
-        data.clickedLat <= maxLat &&
-        data.clickedLng >= minLng &&
-        data.clickedLng <= maxLng;
-    } else {
-      const radius = question.radiusKm ?? 200;
-      correct = distance <= radius;
-    }
     const prevStrike = sessionStrikes[data.sessionId] || 0;
     const strike = correct ? prevStrike + 1 : 0;
     sessionStrikes[data.sessionId] = strike;
