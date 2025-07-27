@@ -1,6 +1,6 @@
 const http = require('http');
 const { questions } = require('./questions');
-const { haversineDistanceKm } = require('./haversine');
+const { checkAnswer } = require('./answer');
 const { AnswerRequest, AnswerResponse, Question } = require('./types');
 
 const sessionStrikes: Record<string, number> = {};
@@ -46,13 +46,11 @@ function handleCheckAnswer(req: any, res: any) {
       return;
     }
 
-    const distance = haversineDistanceKm(
+    const { correct, distance } = checkAnswer(
+      question,
       data.clickedLat,
-      data.clickedLng,
-      question.lat,
-      question.lng
+      data.clickedLng
     );
-    const correct = distance <= 200;
     const prevStrike = sessionStrikes[data.sessionId] || 0;
     const strike = correct ? prevStrike + 1 : 0;
     sessionStrikes[data.sessionId] = strike;

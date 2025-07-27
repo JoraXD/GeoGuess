@@ -4,7 +4,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
-    "test": "npm run build && node dist/haversine.test.js"
+    "test": "npm run build && node dist/haversine.test.js && node dist/checkAnswer.test.js"
   },
   "dependencies": {},
   "devDependencies": {}

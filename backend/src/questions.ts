@@ -88,6 +88,7 @@ export const questions: Question[] = [
     lng: 37.6176,
     hint: 'Столица России',
     category: 'capital',
+    radiusKm: 100,
   },
   {
     id: 12,
@@ -96,6 +97,7 @@ export const questions: Question[] = [
     lng: 13.4050,
     hint: 'Столица Германии',
     category: 'capital',
+    radiusKm: 100,
   },
   {
     id: 13,
@@ -104,6 +106,7 @@ export const questions: Question[] = [
     lng: 139.6917,
     hint: 'Столица Японии',
     category: 'capital',
+    radiusKm: 100,
   },
   {
     id: 14,
@@ -112,6 +115,7 @@ export const questions: Question[] = [
     lng: 149.13,
     hint: 'Столица Австралии',
     category: 'capital',
+    radiusKm: 100,
   },
   {
     id: 15,
@@ -120,6 +124,7 @@ export const questions: Question[] = [
     lng: -75.6972,
     hint: 'Столица Канады',
     category: 'capital',
+    radiusKm: 100,
   },
   {
     id: 16,
@@ -128,6 +133,7 @@ export const questions: Question[] = [
     lng: 2.2137,
     hint: 'Западноевропейская страна',
     category: 'country',
+    bbox: [41, -5.5, 51.5, 9.5],
   },
   {
     id: 17,
@@ -136,6 +142,7 @@ export const questions: Question[] = [
     lng: -51.9253,
     hint: 'Крупнейшая страна Южной Америки',
     category: 'country',
+    bbox: [-34, -74, 5, -34],
   },
   {
     id: 18,
@@ -144,6 +151,7 @@ export const questions: Question[] = [
     lng: 30.8025,
     hint: 'Страна на северо-востоке Африки',
     category: 'country',
+    bbox: [22, 24, 32, 36],
   },
   {
     id: 19,
@@ -152,6 +160,7 @@ export const questions: Question[] = [
     lng: 78.9629,
     hint: 'Южноазиатская страна',
     category: 'country',
+    bbox: [6, 68, 36, 97],
   },
   {
     id: 20,
@@ -160,5 +169,6 @@ export const questions: Question[] = [
     lng: -106.3468,
     hint: 'Вторая по величине страна мира',
     category: 'country',
+    bbox: [41, -141, 83, -52],
   },
 ];
