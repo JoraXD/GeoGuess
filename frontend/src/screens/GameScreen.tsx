@@ -6,6 +6,15 @@ import GameTimer from '../components/GameTimer';
 import StatsModal from '../components/StatsModal';
 
 import { Question, AnswerResponse } from '../types';
+
+function calculatePoints(distanceKm: number): number {
+  if (distanceKm <= 5) return 1000;
+  if (distanceKm <= 200) return 600;
+  const maxDistance = 1000;
+  if (distanceKm >= maxDistance) return 0;
+  const ratio = (distanceKm - 200) / (maxDistance - 200);
+  return Math.round(600 * (1 - ratio));
+}
 interface Props {
   mode: 'sprint' | 'survival';
   onFinish: (score: number) => void;
@@ -80,11 +89,12 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
       }),
     })
       .then(r => r.json())
-      .then((data: AnswerResponse) => {
-        setResult(data);
-        setStrike(data.strike);
-        if (data.correct) setScore((s: number) => s + 1);
-      });
+        .then((data: AnswerResponse) => {
+          setResult(data);
+          setStrike(data.strike);
+          const points = calculatePoints(data.distanceKm);
+          setScore((s: number) => s + points);
+        });
   };
 
   const handleContinue = () => {
