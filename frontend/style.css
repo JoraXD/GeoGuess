@@ -95,6 +95,8 @@ button:hover {
   display: flex;
   gap: 1rem;
   padding: 0.5rem;
+  position: relative;
+  z-index: 10;
 }
 
 /* marker animations */
