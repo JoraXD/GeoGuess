@@ -52,7 +52,19 @@ function handleCheckAnswer(req: any, res: any) {
       question.lat,
       question.lng
     );
-    const correct = distance <= 200;
+
+    let correct = false;
+    if (question.bbox) {
+      const [minLat, minLng, maxLat, maxLng] = question.bbox;
+      correct =
+        data.clickedLat >= minLat &&
+        data.clickedLat <= maxLat &&
+        data.clickedLng >= minLng &&
+        data.clickedLng <= maxLng;
+    } else {
+      const radius = question.radiusKm ?? 200;
+      correct = distance <= radius;
+    }
     const prevStrike = sessionStrikes[data.sessionId] || 0;
     const strike = correct ? prevStrike + 1 : 0;
     sessionStrikes[data.sessionId] = strike;
