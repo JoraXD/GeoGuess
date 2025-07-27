@@ -47,6 +47,18 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
   }, []);
 
   useEffect(() => {
+    if (mode === 'sprint') {
+      if (result) return;
+      if (gameTime <= 0 || asked >= 10) {
+        onFinish(score);
+        return;
+      }
+      const id = setTimeout(() => setGameTime((t: number) => t - 1), 1000);
+      return () => clearTimeout(id);
+    }
+  }, [gameTime, asked, mode, score, onFinish]);
+
+  useEffect(() => {
     if (result) return;
     if (qTime <= 0) {
       if (mode === 'survival') {
@@ -57,22 +69,10 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
       }
       return;
     }
-
     const id = setTimeout(() => setQTime((t: number) => t - 1), 1000);
-    return () => clearTimeout(id);
-  }, [qTime, mode, score, onFinish, result]);
 
-  useEffect(() => {
-    if (mode !== 'sprint') return;
-    if (result) return;
-    if (gameTime <= 0 || asked >= 10) {
-      onFinish(score);
-      return;
-    }
-
-    const id = setTimeout(() => setGameTime((t: number) => t - 1), 1000);
     return () => clearTimeout(id);
-  }, [gameTime, asked, mode, score, onFinish, result]);
+  }, [qTime, mode, score, onFinish]);
 
   const handleClick = (lat: number, lng: number) => {
     if (!question || result) return;
@@ -121,17 +121,15 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
       {question && <QuestionBox text={question.text} hint={question.hint} />}
       <StrikeCounter strike={strike} />
       <div className="timers">
-        <GameTimer time={qTime} total={60} label="Вопрос" />
-        {mode === 'sprint' && (
-          <GameTimer time={gameTime} total={120} label="Спринт" />
-        )}
+        <GameTimer seconds={qTime} onExpire={() => {}} />
+        {mode === 'sprint' && <GameTimer seconds={gameTime} onExpire={() => {}} />}
       </div>
       <div className="map-container">
         <GameMap
           onMapClick={handleClick}
           correctPoint={result ? [result.correctLat, result.correctLng] : undefined}
           clickedPoint={clicked ? [clicked[0], clicked[1]] : undefined}
-          lineColor={result ? (result.distanceKm <= 200 ? 'green' : result.distanceKm <= 500 ? 'yellow' : 'red') : 'blue'}
+          lineColor={result ? (result.distanceKm <= 500 ? 'green' : result.distanceKm <= 200 ? 'yellow' : 'red') : 'blue'}
           answerCorrect={result ? result.correct : undefined}
         />
         {result && (
