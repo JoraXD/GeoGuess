@@ -2,6 +2,7 @@ import { MapContainer, TileLayer, Marker, Polyline, useMapEvents } from 'react-l
 import { LatLngTuple, LeafletMouseEvent } from 'leaflet';
 import L from 'leaflet';
 import { useEffect, useRef } from 'react';
+import 'leaflet/dist/leaflet.css';
 
 
 interface ClickHandlerProps {
