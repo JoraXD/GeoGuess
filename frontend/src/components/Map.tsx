@@ -46,8 +46,7 @@ export default function GameMap({
 
   return (
     <MapContainer center={[20, 0]} zoom={2} style={{ height: '100%', width: '100%' }}>
-      {/* Attempt to use Russian-language tiles */}
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?lang=ru" />
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <ClickHandler onClick={onMapClick} />
 
       {correctPoint && clickedPoint && (
