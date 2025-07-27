@@ -47,18 +47,6 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
   }, []);
 
   useEffect(() => {
-    if (mode === 'sprint') {
-      if (result) return;
-      if (gameTime <= 0 || asked >= 10) {
-        onFinish(score);
-        return;
-      }
-      const id = setTimeout(() => setGameTime((t: number) => t - 1), 1000);
-      return () => clearTimeout(id);
-    }
-  }, [gameTime, asked, mode, score, onFinish]);
-
-  useEffect(() => {
     if (result) return;
     if (qTime <= 0) {
       if (mode === 'survival') {
@@ -69,10 +57,22 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
       }
       return;
     }
-    const id = setTimeout(() => setQTime((t: number) => t - 1), 1000);
 
+    const id = setTimeout(() => setQTime((t: number) => t - 1), 1000);
     return () => clearTimeout(id);
-  }, [qTime, mode, score, onFinish]);
+  }, [qTime, mode, score, onFinish, result]);
+
+  useEffect(() => {
+    if (mode !== 'sprint') return;
+    if (result) return;
+    if (gameTime <= 0 || asked >= 10) {
+      onFinish(score);
+      return;
+    }
+
+    const id = setTimeout(() => setGameTime((t: number) => t - 1), 1000);
+    return () => clearTimeout(id);
+  }, [gameTime, asked, mode, score, onFinish, result]);
 
   const handleClick = (lat: number, lng: number) => {
     if (!question || result) return;
@@ -121,8 +121,10 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
       {question && <QuestionBox text={question.text} hint={question.hint} />}
       <StrikeCounter strike={strike} />
       <div className="timers">
-        <GameTimer seconds={qTime} onExpire={() => {}} />
-        {mode === 'sprint' && <GameTimer seconds={gameTime} onExpire={() => {}} />}
+        <GameTimer time={qTime} total={60} label="Вопрос" />
+        {mode === 'sprint' && (
+          <GameTimer time={gameTime} total={120} label="Спринт" />
+        )}
       </div>
       <div className="map-container">
         <GameMap
