@@ -7,7 +7,8 @@ import StatsModal from '../components/StatsModal';
 
 import { Question, AnswerResponse, Category } from '../types';
 
-function calculatePoints(distanceKm: number): number {
+function calculatePoints(distanceKm: number, correct: boolean): number {
+  if (correct) return 1000;
   if (distanceKm <= 200) return 1000;
   if (distanceKm <= 500) return 600;
   const maxDistance = 1000;
@@ -97,7 +98,7 @@ useEffect(() => {
         .then((data: AnswerResponse) => {
           setResult(data);
           setStrike(data.strike);
-          const points = calculatePoints(data.distanceKm);
+          const points = calculatePoints(data.distanceKm, data.correct);
           setScore((s: number) => s + points);
         });
   };
