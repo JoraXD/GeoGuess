@@ -1,3 +1,5 @@
+export type Category = 'country' | 'capital' | 'landmark' | 'mixed';
+
 export type Question = {
   id: number;
   text: string;
