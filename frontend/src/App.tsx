@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Category } from './types';
 import StartScreen from './screens/StartScreen';
 import GameScreen from './screens/GameScreen';
 import EndScreen from './screens/EndScreen';
@@ -6,8 +7,10 @@ import EndScreen from './screens/EndScreen';
 export default function App() {
   const [mode, setMode] = useState<'start' | 'sprint' | 'survival' | 'end'>('start');
   const [score, setScore] = useState(0);
+  const [category, setCategory] = useState<Category>('landmark');
 
-  const handleStart = (m: 'sprint' | 'survival') => {
+  const handleStart = (m: 'sprint' | 'survival', c: Category) => {
+    setCategory(c);
     setMode(m);
   };
 
@@ -27,6 +30,13 @@ export default function App() {
 
   if (mode === 'start') return <StartScreen onStart={handleStart} />;
   if (mode === 'sprint' || mode === 'survival')
-    return <GameScreen mode={mode} onFinish={handleFinish} onHome={handleHome} />;
+    return (
+      <GameScreen
+        mode={mode}
+        category={category}
+        onFinish={handleFinish}
+        onHome={handleHome}
+      />
+    );
   return <EndScreen score={score} onRestart={handleRestart} />;
 }

@@ -5,7 +5,7 @@ import StrikeCounter from '../components/StrikeCounter';
 import GameTimer from '../components/GameTimer';
 import StatsModal from '../components/StatsModal';
 
-import { Question, AnswerResponse } from '../types';
+import { Question, AnswerResponse, Category } from '../types';
 
 function calculatePoints(distanceKm: number): number {
   if (distanceKm <= 200) return 1000;
@@ -17,11 +17,12 @@ function calculatePoints(distanceKm: number): number {
 }
 interface Props {
   mode: 'sprint' | 'survival';
+  category: Category;
   onFinish: (score: number) => void;
   onHome: () => void;
 }
 
-export default function GameScreen({ mode, onFinish, onHome }: Props) {
+export default function GameScreen({ mode, category, onFinish, onHome }: Props) {
   const [question, setQuestion] = useState<Question | null>(null);
   const [clicked, setClicked] = useState<[number, number] | null>(null);
   const [result, setResult] = useState<AnswerResponse | null>(null);
@@ -32,7 +33,12 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
   const [gameTime, setGameTime] = useState(mode === 'sprint' ? 120 : 0);
 
   const fetchQuestion = () => {
-    fetch('http://localhost:3000/questions?category=landmark')
+    let cat: Category = category;
+    if (category === 'mixed') {
+      const all: Category[] = ['landmark', 'capital', 'country'];
+      cat = all[Math.floor(Math.random() * all.length)];
+    }
+    fetch(`http://localhost:3000/questions?category=${cat}`)
       .then(r => r.json())
       .then((q: Question) => {
         setQuestion(q);
@@ -44,7 +50,7 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
 
   useEffect(() => {
     fetchQuestion();
-  }, []);
+  }, [category]);
 
   useEffect(() => {
     if (mode === 'sprint') {
