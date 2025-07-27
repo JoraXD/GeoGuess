@@ -55,6 +55,45 @@ button:hover {
   border-radius: 4px;
 }
 
+.question-timer {
+  position: relative;
+  width: 200px;
+  height: 24px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #eee;
+  overflow: hidden;
+}
+
+.question-timer .progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #4caf50, #f1c40f);
+  transition: width 1s linear;
+}
+
+.question-timer.time-up .progress-bar {
+  background: #e74c3c;
+  animation: flash 0.5s step-end infinite;
+}
+
+.question-timer .timer-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+@keyframes flash {
+  50% {
+    opacity: 0;
+  }
+}
+
 .result-overlay {
   position: absolute;
   top: 10px;
