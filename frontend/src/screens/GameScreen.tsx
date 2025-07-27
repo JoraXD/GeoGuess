@@ -3,7 +3,6 @@ import GameMap from '../components/Map';
 import QuestionBox from '../components/QuestionBox';
 import StrikeCounter from '../components/StrikeCounter';
 import GameTimer from '../components/GameTimer';
-import QuestionTimer from '../components/QuestionTimer';
 import StatsModal from '../components/StatsModal';
 
 import { Question, AnswerResponse } from '../types';
@@ -122,7 +121,7 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
       {question && <QuestionBox text={question.text} hint={question.hint} />}
       <StrikeCounter strike={strike} />
       <div className="timers">
-        <QuestionTimer seconds={qTime} onExpire={() => {}} />
+        <GameTimer seconds={qTime} onExpire={() => {}} />
         {mode === 'sprint' && <GameTimer seconds={gameTime} onExpire={() => {}} />}
       </div>
       <div className="map-container">
