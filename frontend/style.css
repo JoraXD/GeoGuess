@@ -50,9 +50,36 @@ button:hover {
 .strike-counter,
 .game-timer {
   padding: 0.5rem;
+  position: relative;
+  padding: 0.5rem 0.75rem;
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
+  min-width: 70px;
+  text-align: center;
+}
+
+.game-timer .timer-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: #4caf50;
+  transition: width 1s linear, background 0.3s ease;
+}
+
+.game-timer .timer-bar.low {
+  background: #e74c3c;
+}
+
+.game-timer .timer-time {
+  font-weight: bold;
+}
+
+.game-timer .timer-label {
+  font-size: 0.75rem;
+  color: #666;
+  display: block;
 }
 
 .result-overlay {

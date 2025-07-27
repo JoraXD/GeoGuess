@@ -1,27 +1,18 @@
-import { useEffect, useState } from 'react';
-
 interface Props {
-  seconds: number;
-  onExpire: () => void;
+  time: number;
+  total: number;
+  label?: string;
 }
 
-export default function GameTimer({ seconds, onExpire }: Props) {
-  const [time, setTime] = useState(seconds);
+export default function GameTimer({ time, total, label }: Props) {
+  const ratio = Math.max(0, Math.min(1, time / total));
+  const barClass = `timer-bar${time <= 10 ? ' low' : ''}`;
 
-  useEffect(() => {
-    setTime(seconds);
-  }, [seconds]);
-
-  useEffect(() => {
-
-    if (time <= 0) {
-      onExpire();
-      return;
-    }
-    const id = setTimeout(() => setTime((t: number) => t - 1), 1000);
-
-    return () => clearTimeout(id);
-  }, [time, onExpire]);
-
-  return <div className="game-timer">Время: {time}</div>;
+    return (
+    <div className="game-timer">
+      <div className={barClass} style={{ width: `${ratio * 100}%` }} />
+      {label && <span className="timer-label">{label}</span>}
+      <span className="timer-time">{time}</span>
+    </div>
+  );
 }
