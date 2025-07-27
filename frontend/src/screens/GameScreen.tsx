@@ -129,7 +129,7 @@ export default function GameScreen({ mode, onFinish, onHome }: Props) {
           onMapClick={handleClick}
           correctPoint={result ? [result.correctLat, result.correctLng] : undefined}
           clickedPoint={clicked ? [clicked[0], clicked[1]] : undefined}
-          lineColor={result ? (result.distanceKm <= 50 ? 'green' : result.distanceKm <= 200 ? 'yellow' : 'red') : 'blue'}
+          lineColor={result ? (result.distanceKm <= 200 ? 'green' : result.distanceKm <= 500 ? 'yellow' : 'red') : 'blue'}
           answerCorrect={result ? result.correct : undefined}
         />
         {result && (
